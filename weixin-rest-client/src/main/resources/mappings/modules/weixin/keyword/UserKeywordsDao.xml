@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jbase.modules.weixin.dao.keyword.UserKeywordsDao">
+    
+	<sql id="userKeywordsColumns">
+		a.id AS "id",
+		a.username AS "username",
+		a.keyword AS "keyword",
+		a.addtime AS "addtime"
+	</sql>
+	
+	<sql id="userKeywordsJoins">
+	</sql>
+    
+	<select id="get" resultType="UserKeywords">
+		SELECT 
+			<include refid="userKeywordsColumns"/>
+		FROM user_keywords a
+		<include refid="userKeywordsJoins"/>
+		WHERE a.id = #{id}
+	</select>
+	
+	<select id="findList" resultType="UserKeywords">
+		SELECT 
+			<include refid="userKeywordsColumns"/>
+		FROM user_keywords a
+		<include refid="userKeywordsJoins"/>
+		<where>
+			
+			<if test="username != null and username != ''">
+				AND a.username = #{username}
+			</if>
+			<if test="keyword != null and keyword != ''">
+				AND a.keyword = #{keyword}
+			</if>
+			<if test="beginAddtime != null and endAddtime != null and beginAddtime != '' and endAddtime != ''">
+				AND a.addtime BETWEEN #{beginAddtime} AND #{endAddtime}
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+			</otherwise>
+		</choose>
+	</select>
+	
+	<select id="findAllList" resultType="UserKeywords">
+		SELECT 
+			<include refid="userKeywordsColumns"/>
+		FROM user_keywords a
+		<include refid="userKeywordsJoins"/>
+		<where>
+			
+		</where>		
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+			</otherwise>
+		</choose>
+	</select>
+	
+	<insert id="insert">
+		INSERT INTO user_keywords(
+			id,
+			username,
+			keyword,
+			addtime
+		) VALUES (
+			#{id},
+			#{username},
+			#{keyword},
+			#{addtime}
+		)
+	</insert>
+	
+	<update id="update">
+		UPDATE user_keywords SET 	
+			username = #{username},
+			keyword = #{keyword},
+			addtime = #{addtime}
+		WHERE id = #{id}
+	</update>
+	
+	<update id="delete">
+		DELETE FROM user_keywords
+		WHERE id = #{id}
+	</update>
+	
+</mapper>
