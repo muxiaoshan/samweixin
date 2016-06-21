@@ -17,7 +17,7 @@ import com.jbase.modules.weixin.client.WeixinHttpClient;
 /**
  * 用户关键词处理定时任务，从服务器上读取用户关键词
  * 暂时不用
- * @see com.jbase.modules.weixin.client.keyword.web.web.UserKeywordsLocalRestServer
+ * @see com.jbase.modules.weixin.client.keyword.web.UserKeywordsLanRestServer.UserKeywordsLocalRestServer
  * @author lenovo-pc
  *
  */
