@@ -1,5 +1,8 @@
 package com.jbase.modules.weixin.client.keyword.web;
 
+import java.net.URLDecoder;
+import java.sql.Timestamp;
+
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,8 +19,8 @@ import com.jbase.modules.weixin.service.keyword.UserKeywordsService;
  *
  */
 @Controller
-@RequestMapping(value = "${adminPath}/weixin/keyword/localrest")
-public class UserKeywordsLocalRestServer extends BaseController  {
+@RequestMapping(value = "${adminPath}/weixin/keyword/lanrest")
+public class UserKeywordsLanRestServer extends BaseController  {
 	@Autowired
 	private UserKeywordsService userKeywordsService;
 	
@@ -28,6 +31,8 @@ public class UserKeywordsLocalRestServer extends BaseController  {
 		ResultVo retVo = new ResultVo();
 		retVo.setRet(1);
 		try {
+			userKeywords.setKeyword(URLDecoder.decode(userKeywords.getKeyword(),"utf-8"));
+			userKeywords.setAddtime(new Timestamp(System.currentTimeMillis()));
 			userKeywordsService.save(userKeywords);
 			logger.info("保存微信关键词成功");
 			retVo.setData(userKeywords);
