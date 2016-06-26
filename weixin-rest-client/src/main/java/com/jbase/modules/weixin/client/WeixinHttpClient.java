@@ -107,6 +107,7 @@ public class WeixinHttpClient {
 			}
 		}
 		HttpGet get = new HttpGet(url);
+		initHttpRequest(get);
 		CloseableHttpResponse httpResponse = null;
 		try {
 			httpResponse = httpClient.execute(get);
@@ -126,6 +127,7 @@ public class WeixinHttpClient {
 		CloseableHttpResponse httpResponse = null;
 		try {
             HttpPost post = new HttpPost(url);          //这里用上本机的某个工程做测试
+            initHttpRequest(post);
             if (params != null && params.size() > 0) {
             	//创建参数列表
             	List<NameValuePair> list = new ArrayList<NameValuePair>();
@@ -150,5 +152,13 @@ public class WeixinHttpClient {
         		}
         	}
         }
+	}
+	/**
+	 * 初始化http请求
+	 * @param req
+	 */
+	private static void initHttpRequest(HttpRequest req) {
+		//设置浏览器信息
+		req.setHeader("User-Agent", "Mozilla/5.0 (X11; U; Linux i686; zh-CN; rv:1.9.1.2) Gecko/20090803 Fedora/3.5.2-2.fc11 Firefox/3.5.2");
 	}
 }
